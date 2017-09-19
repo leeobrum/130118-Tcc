@@ -18,6 +18,9 @@ Route::get('/contato', ['as' => 'site.contato', function(){return view('site.con
 
 Route::get('/produto/{id}/{titulo?}', ['as' => 'site.produto', function(){return view('site.produto');}]);
 
-Auth::routes();
+/*Auth::routes();*/
+Route::get('/admin/login', ['as' => 'admin.login', function(){return view('admin.login.index');}]);
+Route::post('/admin/login', ['as' => 'admin.login', 'uses' => 'Admin\UsuarioController@login']);
 
-Route::get('/home', 'HomeController@index');
+/*Route::get('/home', 'HomeController@index');*/
+Route::get('/admin', ['as' => 'admin.principal', function(){return view('admin.principal.index');}]);
