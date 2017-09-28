@@ -12,7 +12,7 @@ class UsuariosSeeds extends Seeder
     public function run()
     {
         $usuario = new User();
-        $usuario->name = "Guilherme Ferreira";
+        $usuario->name = "Leonardo Brum";
         $usuario->email = "admin@mail.com";
         $usuario->password = bcrypt("123456");
         $usuario->save();

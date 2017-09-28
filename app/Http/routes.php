@@ -24,6 +24,12 @@ Route::group(['middleware'=>'auth'], function(){
 
 	Route::get('/admin',['as'=>'admin.principal', function(){ return view('admin.principal.index');}]);	
 	Route::get('/admin/login/sair',['as'=>'admin.login.sair', 'uses'=>'Admin\UsuarioController@sair']);
+
 	Route::get('/admin/usuarios',['as'=>'admin.usuarios', 'uses'=>'Admin\UsuarioController@index']);
-});
+	Route::get('/admin/usuarios/adicionar',		['as'=>'admin.usuarios.adicionar', 'uses'=>'Admin\UsuarioController@adicionar']);
+	Route::get('/admin/usuarios/editar/{id}',	['as'=>'admin.usuarios.editar', 'uses'=>'Admin\UsuarioController@editar']);
+	Route::get('/admin/usuarios/deletar/{id}',	['as'=>'admin.usuarios.deletar', 'uses'=>'Admin\UsuarioController@deletar']);
+	Route::post('/admin/usuarios/salvar',		['as'=>'admin.usuarios.salvar', 'uses'=>'Admin\UsuarioController@salvar']);
+	Route::put('/admin/usuarios/atualizar{id}',	['as'=>'admin.usuarios.atualizar', 'uses'=>'Admin\UsuarioController@atualizar']);
+}); 
 

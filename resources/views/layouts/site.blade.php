@@ -43,6 +43,7 @@
   <div class="footer-copyright">
     <div class="container">
     © 2017 Madeireira Brum
+    <a class="grey-text text-lighten-4 right" href="#!">LeonardoBrum</a>
     </div>
   </div>
 </footer>
