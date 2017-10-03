@@ -9,7 +9,14 @@
             @if(Auth::guest())
             <li><a href="{{route('admin.login')}}">Login</a></li>
             @else
-            <li><a href="#">{{ Auth::user()->name }}</a></li>
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
+
+            <ul id="dropdown1" class="dropdown-content">
+              <li><a href="#!">{{ Auth::user()->name }}</a></li>
+              <li><a href="{{route('admin.usuarios')}}">Usuários</a></li>
+              <li><a href="{{route('admin.paginas')}}">Páginas</a></li>
+            </ul>
+
             <li><a href="{{route('admin.login.sair')}}">Sair</a></li>            
             @endif
           </ul>
