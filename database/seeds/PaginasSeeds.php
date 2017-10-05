@@ -29,6 +29,23 @@ class PaginasSeeds extends Seeder
         $paginaSobre->save();
         echo "Pagina Sobre Criada com sucesso!";
 
+
+        $existe = Pagina::where('tipo', '=', 'contato')->count();
+
+        if($existe){
+            $paginaContato = Pagina::where('tipo', '=', 'contato')->first();            
+        } else {
+            $paginaContato = new Pagina();
+        }
+
+        $paginaContato->titulo = "Entre em Contato";
+        $paginaContato->descricao = "Preencha o Formulário";
+        $paginaContato->texto = "Contato";
+        $paginaContato->imagem = "img/sobre.jpg";
+        $paginaContato->email = "leeobrum@gmail.com";
+        $paginaContato->tipo = "contato";
+        $paginaContato->save();
+        echo " Pagina Contato Criada com sucesso!";
         
     }
 }

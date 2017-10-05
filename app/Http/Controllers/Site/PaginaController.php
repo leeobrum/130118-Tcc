@@ -15,4 +15,25 @@ class PaginaController extends Controller
 
     	return view('site.sobre', compact('pagina'));
     }
+
+    public function contato(){
+    	$pagina = Pagina::where('tipo', '=', 'contato')->first();
+
+    	return view('site.contato', compact('pagina'));
+    }
+
+    public function enviarContato(Request $request){
+    	$pagina = Pagina::where('tipo', '=', 'contato')->first();
+    	$email = $pagina->email;
+
+    	\Mail::send('emails.contato', ['request'=>$request], function($m) use ($request, $email){
+    		$m->from($request['email'], $request['nome']);
+            $m->replyTo($request['email'], $request['nome']);
+    		$m->subject('Contato pelo SiteDinamico');            
+    		$m->to($email, 'Contato do SiteDinamico');
+    	});	
+
+        \Session::flash('mensagem',['msg'=>'Contato enviado com sucesso!','class'=>'green white-text']);
+    	return redirect()->route('site.contato');
+    }
 }
