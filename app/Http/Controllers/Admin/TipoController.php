@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Tipo;
+use App\Produto;
 
 class TipoController extends Controller
 {
@@ -51,6 +52,21 @@ class TipoController extends Controller
     }
 
     public function deletar($id){
+        
+        if(Produto::where('tipo_id', '=' , $id)->count()){
+
+            $msg = "Nao é possivel deletar esse Tipo! Esses Tipo de Produto (";
+            $produtos = Produto::where('tipo_id', "=" ,$id)->get();
+
+            foreach ($produtos as $produto) {
+                $msg .= " Id: ".$produto->id." ";
+            }
+            $msg.= ") estao relacionados.";
+
+            \Session::flash('mensagem',['msg'=>$msg,'class'=>'red white-text']);  
+            return redirect()->route('admin.tipos');          
+        }
+
         Tipo::find($id)->delete();
 
         \Session::flash('mensagem',['msg'=>'Registro deletado com sucesso!','class'=>'green white-text']);
