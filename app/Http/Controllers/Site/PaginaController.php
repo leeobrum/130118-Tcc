@@ -24,6 +24,7 @@ class PaginaController extends Controller
 
     public function enviarContato(Request $request){
     	$pagina = Pagina::where('tipo', '=', 'contato')->first();
+        //$email = 'leo.brum04@gmail.com';
     	$email = $pagina->email;
 
     	\Mail::send('emails.contato', ['request'=>$request], function($m) use ($request, $email){

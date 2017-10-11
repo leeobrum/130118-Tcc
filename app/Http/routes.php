@@ -12,14 +12,14 @@
 */
 
 
-Route::get('/',			['as'=>'site.home', function(){ return view('site.home');}]);
+Route::get('/',			['as'=>'site.home', 'uses'=>'Site\HomeController@index']);
 Route::get('/sobre',	['as'=>'site.sobre', 'uses'=>'Site\PaginaController@sobre']);
 
 Route::get('/contato',			['as'=>'site.contato', 'uses'=>'Site\PaginaController@contato']);
 Route::get('/contato/enviar',	['as'=>'site.contato.enviar', 'uses'=>'Site\PaginaController@enviarContato']);
 Route::post('/contato/enviar',	['as'=>'site.contato.enviar', 'uses'=>'Site\PaginaController@enviarContato']);
 
-Route::get('/produto/{id}/{titulo?}',	['as'=>'site.produto', function(){ return view('site.produto');}]);
+Route::get('/produto/{id}/{titulo?}',	['as'=>'site.produto', 'uses'=>'Site\ProdutoController@index']);
 Route::get('/admin/login',				['as'=>'admin.login', function(){ return view('admin.login.index');}]);
 Route::post('/admin/login',				['as'=>'admin.login', 'uses'=>'Admin\UsuarioController@login']);
 
@@ -42,12 +42,12 @@ Route::group(['middleware'=>'auth'], function(){
 	Route::put('/admin/paginas/atualizar/{id}', ['as'=>'admin.paginas.atualizar', 'uses' =>'Admin\PaginaController@atualizar']);
 
 //Tipos
-	Route::get('/admin/tipos',['as'=>'admin.tipos', 'uses'=>'Admin\TipoController@index']);
+	Route::get('/admin/tipos',				['as'=>'admin.tipos', 'uses'=>'Admin\TipoController@index']);
 	Route::get('/admin/tipos/adicionar',	['as'=>'admin.tipos.adicionar', 'uses'=>'Admin\TipoController@adicionar']);
 	Route::get('/admin/tipos/editar/{id}',	['as'=>'admin.tipos.editar', 'uses'=>'Admin\TipoController@editar']);
 	Route::get('/admin/tipos/deletar/{id}',	['as'=>'admin.tipos.deletar', 'uses'=>'Admin\TipoController@deletar']);
 	Route::post('/admin/tipos/salvar',		['as'=>'admin.tipos.salvar', 'uses'=>'Admin\TipoController@salvar']);
-	Route::put('/admin/tipos/atualizar{id}',	['as'=>'admin.tipos.atualizar', 'uses'=>'Admin\TipoController@atualizar']);
+	Route::put('/admin/tipos/atualizar{id}',['as'=>'admin.tipos.atualizar', 'uses'=>'Admin\TipoController@atualizar']);
 
 //Produtos
 	Route::get('/admin/produtos',				['as'=>'admin.produtos', 'uses'=>'Admin\ProdutoController@index']);
@@ -57,5 +57,12 @@ Route::group(['middleware'=>'auth'], function(){
 	Route::post('/admin/produtos/salvar',		['as'=>'admin.produtos.salvar', 'uses'=>'Admin\ProdutoController@salvar']);
 	Route::put('/admin/produtos/atualizar{id}',	['as'=>'admin.produtos.atualizar', 'uses'=>'Admin\ProdutoController@atualizar']);
 	
+//Galeria
+	Route::get('/admin/galerias/{id}',			['as'=>'admin.galerias', 'uses'=>'Admin\GaleriaController@index']);
+	Route::get('/admin/galerias/adicionar/{id}',['as'=>'admin.galerias.adicionar', 'uses'=>'Admin\GaleriaController@adicionar']);
+	Route::get('/admin/galerias/editar/{id}',	['as'=>'admin.galerias.editar', 'uses'=>'Admin\GaleriaController@editar']);
+	Route::get('/admin/galerias/deletar/{id}',	['as'=>'admin.galerias.deletar', 'uses'=>'Admin\GaleriaController@deletar']);
+	Route::post('/admin/galerias/salvar/{id}',	['as'=>'admin.galerias.salvar', 'uses'=>'Admin\GaleriaController@salvar']);
+	Route::put('/admin/galerias/atualizar{id}',	['as'=>'admin.galerias.atualizar', 'uses'=>'Admin\GaleriaController@atualizar']);
 }); 
 
