@@ -23,6 +23,8 @@ Route::get('/produto/{id}/{titulo?}',	['as'=>'site.produto', 'uses'=>'Site\Produ
 Route::get('/admin/login',				['as'=>'admin.login', function(){ return view('admin.login.index');}]);
 Route::post('/admin/login',				['as'=>'admin.login', 'uses'=>'Admin\UsuarioController@login']);
 
+Route::get('/busca',	['as'=>'site.busca', 'uses'=>'Site\HomeController@busca']);
+
 Route::group(['middleware'=>'auth'], function(){
 
 	Route::get('/admin',			['as'=>'admin.principal', function(){ return view('admin.principal.index');}]);	

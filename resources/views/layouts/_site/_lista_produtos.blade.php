@@ -21,6 +21,8 @@
 	</div>
 @endforeach
 </div>
-<div align="center" class="row">
-		{{ $produtos->links() }}
-</div>
+@if($paginacao)
+	<div align="center" class="row">
+			{{ $produtos->links() }}
+	</div>
+@endif
