@@ -6,6 +6,16 @@
     <div class="row section">
         <h4 align="center">Detalhe do Produto</h4>
         <div class="divider"></div>
+        <div class="row">
+            <nav>
+                <div class="nav-wrapper teal lighten-1">
+                  <div class="col s12">
+                    <a href="{{route('site.home')}}" class="breadcrumb">Home</a>
+                    <a class="breadcrumb">Detalhe do Produto</a>            
+                  </div>
+                </div>
+             </nav>
+        </div>
     </div>
     <div class="row section">
         <div class="col s12 m8">
@@ -38,9 +48,14 @@
             <blockquote>{{ $produto->descricao }}</blockquote>
             <p><b>Código:</b> {{ $produto->id }}</p>
             <p><b>Tipo:</b> {{ $produto->tipo->titulo }}</p>
-            <p><b>Valor:</b>R$ {{ number_format($produto->valor,2,",",".") }}</p>
-            <a class="btn deep-orange darken-1" href="{{ route('site.contato') }}">Comprar</a>
-        </div>
+            <p><b>Valor:</b>R$ {{ number_format($produto->valor,2,",",".") }}</p>                    
+        </div>    
+        <form action="{{ route('admin.carrinho.comprar', $produto->id) }}" method="post">
+        {{csrf_field()}}
+
+            <button class="btn blue">Comprar</button>
+        </form>
+        
     </div>
 </div>
 @endsection

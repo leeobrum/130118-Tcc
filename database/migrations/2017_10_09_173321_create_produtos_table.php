@@ -20,7 +20,7 @@ class CreateProdutosTable extends Migration
             $table->text('descricao');
             $table->string('imagem');            
             $table->decimal('valor', 6, 2)->default(0);
-            $table->bigInteger('vizualizacoes')->default(0);                       
+            $table->Integer('qnt')->unsigned();                        
             $table->enum('ativo', ['S', 'N'])->default('S');
             $table->timestamps();
         });

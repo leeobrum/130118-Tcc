@@ -25,6 +25,7 @@ Route::post('/admin/login',				['as'=>'admin.login', 'uses'=>'Admin\UsuarioContr
 
 Route::get('/busca',	['as'=>'site.busca', 'uses'=>'Site\HomeController@busca']);
 
+//Grupo Admin
 Route::group(['middleware'=>'auth'], function(){
 
 	Route::get('/admin',			['as'=>'admin.principal', function(){ return view('admin.principal.index');}]);	
@@ -66,5 +67,21 @@ Route::group(['middleware'=>'auth'], function(){
 	Route::get('/admin/galerias/deletar/{id}',	['as'=>'admin.galerias.deletar', 'uses'=>'Admin\GaleriaController@deletar']);
 	Route::post('/admin/galerias/salvar/{id}',	['as'=>'admin.galerias.salvar', 'uses'=>'Admin\GaleriaController@salvar']);
 	Route::put('/admin/galerias/atualizar{id}',	['as'=>'admin.galerias.atualizar', 'uses'=>'Admin\GaleriaController@atualizar']);
+
+//Cupom_descontos
+	Route::get('/admin/cupom_descontos',				['as'=>'admin.cupom_descontos', 'uses'=>'Admin\CupomDescontoController@index']);
+	Route::get('/admin/cupom_descontos/adicionar',		['as'=>'admin.cupom_descontos.adicionar', 'uses'=>'Admin\CupomDescontoController@adicionar']);
+	Route::get('/admin/cupom_descontos/editar/{id}',	['as'=>'admin.cupom_descontos.editar', 'uses'=>'Admin\CupomDescontoController@editar']);
+	Route::get('/admin/cupom_descontos/deletar/{id}',	['as'=>'admin.cupom_descontos.deletar', 'uses'=>'Admin\CupomDescontoController@deletar']);
+	Route::post('/admin/cupom_descontos/salvar',		['as'=>'admin.cupom_descontos.salvar', 'uses'=>'Admin\CupomDescontoController@salvar']);
+	Route::put('/admin/cupom_descontos/atualizar{id}',	['as'=>'admin.cupom_descontos.atualizar', 'uses'=>'Admin\CupomDescontoController@atualizar']);
+
+//Carrinho
+	Route::get('/admin/carrinho',				['as'=>'admin.carrinho', 'uses'=>'Admin\CarrinhoController@index']);	
+	Route::post('/admin/carrinho/comprar/{id}',		['as'=>'admin.carrinho.comprar', 'uses'=>'Admin\CarrinhoController@comprar']);
+	Route::delete('/admin/carrinho/remover', 'admin\CarrinhoController@remover')->name('admin.carrinho.remover');
+	Route::post('/admin/carrinho/concluir',		['as'=>'admin.carrinho.concluir', 'uses'=>'Admin\CarrinhoController@concluir']);
+	Route::get('/admin/carrinho/compras',		['as'=>'admin.carrinho.compras', 'uses'=>'Admin\CarrinhoController@compras']);
+	
 }); 
 

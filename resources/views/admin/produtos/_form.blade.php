@@ -14,9 +14,13 @@
     </select>
     <label>Tipo do Produto</label>
 </div>
-<div class="input-field">
+<div class="input-field col m6 s12">
     <input type="text" name="valor" class="validate" value="{{(isset($registro->valor) ? $registro->valor : '')}}">
     <label>Valor (Ex: 234.90)</label>
+</div>
+<div class="input-field col m6 s12">
+	<input type="number" name="qnt" class="validate" value="{{(isset($registro->qnt) ? $registro->qnt : '')}}">
+    <label>Quantidade</label>
 </div>
 <div class="row">
 	<div class="file-field input-field col m6 s12">

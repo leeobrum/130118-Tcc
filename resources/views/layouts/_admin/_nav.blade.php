@@ -5,7 +5,7 @@
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
             <li><a href="{{route('admin.principal')}}">Inicio</a></li>
-            <li><a target="blank" href="{{route('site.home')}}">Site</a></li>
+            <li><a target="_blank" href="{{route('site.home')}}">Site</a></li>
             @if(Auth::guest())
             <li><a href="{{route('admin.login')}}">Login</a></li>
             @else
@@ -15,6 +15,7 @@
               <li><a href="#!">{{ Auth::user()->name }}</a></li>
               <li><a href="{{route('admin.produtos')}}">Produtos</a>
               <li><a href="{{route('admin.tipos')}}">Tipos</a>
+              <li><a href="{{route('admin.cupom_descontos')}}">Cupom de Desconto</a>
               <li><a href="{{route('admin.usuarios')}}">Usuários</a></li>
               <li><a href="{{route('admin.paginas')}}">Páginas</a></li>
             </ul>
@@ -24,13 +25,14 @@
           </ul>
           <ul class="side-nav" id="mobile-demo">
             <li><a href="{{route('admin.principal')}}">Inicio</a></li>
-            <li><a target="blank" href="{{route('site.home')}}">Site</a></li>
+            <li><a target="_blank" href="{{route('site.home')}}">Site</a></li>
             @if(Auth::guest())
             <li><a href="{{route('admin.login')}}">Login</a></li>
             @else
             <li><a href="#">{{ Auth::user()->name }}</a></li>
             <li><a href="{{route('admin.produtos')}}">Produtos</a>
-            <li><a href="{{route('admin.tipos')}}">Tipos</a>
+            <li><a href="{{route('admin.tipos')}}">Tipos</a>      
+            <li><a href="{{route('admin.cupom_descontos')}}">Cupom de Desconto</a>      
             <li><a href="{{route('admin.usuarios')}}">Usuários</a></li>
             <li><a href="{{route('admin.paginas')}}">Páginas</a></li>
             <li><a href="{{route('admin.login.sair')}}">Sair</a></li> 

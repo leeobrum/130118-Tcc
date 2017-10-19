@@ -12,5 +12,5 @@ class Produto extends Model
 
     public function galeria(){
     	return $this->hasMany('App\Galeria', 'produto_id', 'id');
-    }
+    }    
 }

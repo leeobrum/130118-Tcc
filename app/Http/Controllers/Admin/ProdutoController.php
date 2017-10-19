@@ -50,7 +50,7 @@ class ProdutoController extends Controller
     	}
 
         $registro->valor = $dados['valor'];
-        $registro->vizualizacoes = 0;
+        $registro->qnt = $dados['qnt'];
         $registro->ativo = $dados['ativo'];
 
         $registro->save();
@@ -78,7 +78,8 @@ class ProdutoController extends Controller
     		$registro->imagem = $diretorio.$nomeArquivo;
     	}
 
-        $registro->valor = $dados['valor'];  
+        $registro->valor = $dados['valor']; 
+        $registro->qnt = $dados['qnt']; 
         $registro->ativo = $dados['ativo'];
 
         $registro->update();
