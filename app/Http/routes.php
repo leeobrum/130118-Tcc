@@ -82,6 +82,8 @@ Route::group(['middleware'=>'auth'], function(){
 	Route::delete('/admin/carrinho/remover', 'admin\CarrinhoController@remover')->name('admin.carrinho.remover');
 	Route::post('/admin/carrinho/concluir',		['as'=>'admin.carrinho.concluir', 'uses'=>'Admin\CarrinhoController@concluir']);
 	Route::get('/admin/carrinho/compras',		['as'=>'admin.carrinho.compras', 'uses'=>'Admin\CarrinhoController@compras']);
+	Route::post('/admin/carrinho/cancelar',		['as'=>'admin.carrinho.cancelar', 'uses'=>'Admin\CarrinhoController@cancelar']);
+	Route::post('/admin/carrinho/desconto',		['as'=>'admin.carrinho.desconto', 'uses'=>'Admin\CarrinhoController@desconto']);
 	
 }); 
 

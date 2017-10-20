@@ -17,7 +17,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th>Nome</th>					
+					<th>Localizador</th>					
 					<th>Desconto</th>					
 					<th>Modo Desconto</th>					
 					<th>Validade</th>					
@@ -28,7 +28,7 @@
 			<tbody>
 			@foreach($registros as $registro)
 				<tr>
-					<td>{{ $registro->nome }}</td>					
+					<td>{{ $registro->localizador }}</td>					
 					<td>{{ $registro->desconto }}</td>					
 					<td>{{ $registro->modo_desconto }}</td>					
 					<td>{{date( 'd/m/Y' , strtotime($registro->dthr_validade))}}</td>				

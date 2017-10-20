@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Pedido;
 use App\Produto;
 use App\PedidoProduto;
+use App\CupomDesconto;
 
 class CarrinhoController extends Controller
 {
@@ -135,7 +136,7 @@ class CarrinhoController extends Controller
             'pedido_id' => $idpedido
             ])->exists();
         if(!$check_produtos) {
-            \Session::flash('mensagem',['msg'=>'Produtos do pedido não encontrados!','class'=>'red white-text']);           
+            \Session::flash('mensagem',['msg'=>'Produtos do pedido não encontrados!','class'=>'red white-text']);
             return redirect()->route('admin.carrinho');
         }
 
@@ -169,6 +170,167 @@ class CarrinhoController extends Controller
             ])->orderBy('updated_at', 'desc')->get();
 
         return view('admin.carrinho.compras', compact('compras', 'cancelados'));
+    }
+
+    public function cancelar()
+    {        
+
+        $req = Request();
+        $idpedido       = $req->input('pedido_id');
+        $idspedido_prod = $req->input('id');
+        $idusuario      = Auth::user()->id;
+
+        if( empty($idspedido_prod) ) {
+            \Session::flash('mensagem',['msg'=>'Nenhum item selecionado para cancelamento!','class'=>'red white-text']);            
+            return redirect()->route('admin.carrinho.compras');
+        }
+
+        $check_pedido = Pedido::where([
+            'id'      => $idpedido,
+            'user_id' => $idusuario,
+            'status'  => 'PA' // Pago
+            ])->exists();
+
+        if( !$check_pedido ) {
+            \Session::flash('mensagem',['msg'=>'Pedido não encontrado para cancelamento!','class'=>'red white-text']);
+            
+            return redirect()->route('admin.carrinho.compras');
+        }
+
+        $check_produtos = PedidoProduto::where([
+                'pedido_id' => $idpedido,
+                'status'    => 'PA'
+            ])->whereIn('id', $idspedido_prod)->exists();
+
+        if( !$check_produtos ) {
+            \Session::flash('mensagem',['msg'=>'Produtos do pedido não encontrados!','class'=>'red white-text']);
+            
+            return redirect()->route('admin.carrinho.compras');
+        }
+
+        PedidoProduto::where([
+                'pedido_id' => $idpedido,
+                'status'    => 'PA'
+            ])->whereIn('id', $idspedido_prod)->update([
+                'status' => 'CA' //Cancelado
+            ]);
+
+        $check_pedido_cancel = PedidoProduto::where([
+                'pedido_id' => $idpedido,
+                'status'    => 'PA'
+            ])->exists();
+
+        if( !$check_pedido_cancel ) {
+            Pedido::where([
+                'id' => $idpedido
+            ])->update([
+                'status' => 'CA'
+            ]);
+
+            \Session::flash('mensagem',['msg'=>'Compra cancelada com sucesso!','class'=>'green white-text']);            
+
+        } else {
+            \Session::flash('mensagem',['msg'=>'Item(ns) da compra cancelado(s) com sucesso!','class'=>'green white-text']);           
+        }
+
+        return redirect()->route('admin.carrinho.compras');
+    }
+
+    public function desconto()
+    {     
+
+        $req = Request();
+        $idpedido  = $req->input('pedido_id');
+        $cupom     = $req->input('cupom');
+        $idusuario = Auth::user()->id;
+
+        if( empty($cupom) ) {
+            \Session::flash('mensagem',['msg'=>'Cupom inválido!','class'=>'red white-text']);            
+            return redirect()->route('admin.carrinho');
+        }
+
+        $cupom = CupomDesconto::where([
+            'localizador' => $cupom,
+            'ativo'       => 'S'
+            ])->where('dthr_validade', '>', date('Y-m-d'))->first();
+
+        if( empty($cupom->id) ) {
+            \Session::flash('mensagem',['msg'=>'Cupom de desconto não encontrado!','class'=>'red white-text']);            
+            return redirect()->route('admin.carrinho');
+        }
+
+        $check_pedido = Pedido::where([
+            'id'      => $idpedido,
+            'user_id' => $idusuario,
+            'status'  => 'RE' // Reservado
+            ])->exists();
+
+        if( !$check_pedido ) {
+            \Session::flash('mensagem',['msg'=>'Pedido não encontrado para validação!','class'=>'red white-text']);    
+            return redirect()->route('admin.carrinho');
+        }
+
+        $pedido_produtos = PedidoProduto::where([
+                'pedido_id' => $idpedido,
+                'status'    => 'RE'
+            ])->get();
+
+        if( empty($pedido_produtos) ) {
+            \Session::flash('mensagem',['msg'=>'Produtos do pedido não encontrados!','class'=>'red white-text']);            
+            return redirect()->route('admin.carrinho');
+        }
+
+        $aplicou_desconto = false;
+        foreach ($pedido_produtos as $pedido_produto) {
+
+            switch ($cupom->modo_desconto) {
+                case 'porc':
+                    $valor_desconto = ( $pedido_produto->valor * $cupom->desconto ) / 100;
+                    break;
+
+                default:
+                    $valor_desconto = $cupom->desconto;
+                    break;
+            }
+
+            $valor_desconto = ($valor_desconto > $pedido_produto->valor) ? $pedido_produto->valor : number_format($valor_desconto, 2);
+
+            switch ($cupom->modo_limite) {
+                case 'qtd':
+                    $qtd_pedido = PedidoProduto::whereIn('status', ['PA', 'RE'])->where([
+                            'cupom_desconto_id' => $cupom->id
+                        ])->count();
+
+                    if( $qtd_pedido >= $cupom->limite ) {
+                        continue;
+                    }
+                    break;
+
+                default:
+                    $valor_ckc_descontos = PedidoProduto::whereIn('status', ['PA', 'RE'])->where([
+                            'cupom_desconto_id' => $cupom->id
+                        ])->sum('desconto');
+
+                    if( ($valor_ckc_descontos+$valor_desconto) > $cupom->limite ) {
+                        continue;
+                    }
+                    break;
+            }
+
+            $pedido_produto->cupom_desconto_id = $cupom->id;
+            $pedido_produto->desconto          = $valor_desconto;
+            $pedido_produto->update();
+
+            $aplicou_desconto = true;
+
+        }
+
+        if( $aplicou_desconto ) {
+            \Session::flash('mensagem',['msg'=>'Cupom aplicado com sucesso!','class'=>'green white-text']);            
+        } else {
+            \Session::flash('mensagem',['msg'=>'Cupom esgotado!','class'=>'red white-text']);            
+        }
+        return redirect()->route('admin.carrinho');
     }
 
 }

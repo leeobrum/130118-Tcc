@@ -20,11 +20,13 @@
             @forelse ($compras as $pedido)
                 <h5 class="col l6 s12 m6"> Pedido: {{ $pedido->id }} </h5>
                 <h5 class="col l6 s12 m6"> Criado em: {{ $pedido->created_at->format('d/m/Y - H:i') }} </h5>
-                
+                <form method="POST" action="{{ route('admin.carrinho.cancelar') }}">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
                     <table>
                         <thead>
                             <tr>
-                                <th></th>
+                                <th colspan="2"></th>
                                 <th>Produto</th>
                                 <th>Valor</th>
                                 <th>Desconto</th>
@@ -41,6 +43,16 @@
                                 $total_pedido += $total_produto;
                             @endphp
                             <tr>
+                                <td class="center">
+                                    @if($pedido_produto->status == 'PA')
+                                        <p class="center">
+                                            <input type="checkbox" id="item-{{ $pedido_produto->id }}" name="id[]" value="{{ $pedido_produto->id }}" />
+                                            <label for="item-{{ $pedido_produto->id }}">Selecionar</label>
+                                        </p>
+                                    @else
+                                        <strong class="red-text">CANCELADO</strong>
+                                    @endif
+                                </td>
                                 <td>
                                     <img width="100" height="100" src="{{ asset($pedido_produto->produto->imagem) }}">
                                 </td>
@@ -56,6 +68,14 @@
                                 <td colspan="3"></td>
                                 <td><strong>Total do pedido</strong></td>
                                 <td>R$ {{ number_format($total_pedido, 2, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button type="submit" class="btn-large red col l12 s12 m12 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cancelar itens selecionados!">
+                                        Cancelar
+                                    </button>   
+                                </td>
+                                <td colspan="3"></td>
                             </tr>
                         </tfoot>
                     </table>

@@ -70,7 +70,15 @@
                 <strong class="col offset-l6 offset-m6 offset-s6 l4 m4 s4 right-align">Total do pedido: </strong>
                 <span class="col l2 m2 s2">R$ {{ number_format($total_pedido, 2, ',', '.') }}</span>
             </div>
-
+            <div class="row">
+                <form method="post" action="{{ route('admin.carrinho.desconto') }}">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
+                    <strong class="col s4 m4 l3 offset-l4 right-align">Cupom de desconto: </strong>
+                    <input class="col s6 m6 l3" type="text" name="cupom">
+                    <button class="btn-flat btn-large col s2 m2 l2">Validar</button>
+                </form>
+            </div>
             <div class="row">
                 <a class="btn-large tooltipped col l4 s4 m4 offset-l2 offset-s2 offset-m2" data-position="top" data-delay="50" data-tooltip="Voltar a página inicial para continuar comprando?" href="{{ route('site.home') }}">Continuar comprando</a>
                 <form method="post" action="{{ route('admin.carrinho.concluir') }}">

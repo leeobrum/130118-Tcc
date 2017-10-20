@@ -2,7 +2,7 @@
   <input type="text" name="nome" id="nome" value="{{ isset($registro->nome) ? $registro->nome : null }}" required="required" autofocus="autofocus">
   <label for="nome">Nome</label>
 </div>
-<div class="input-field col s12 l12 m12">
+<div class="input-field col s6 l6 m6">
   <input type="text" name="localizador" id="localizador" value="{{ isset($registro->localizador) ? $registro->localizador : null }}" required="required">
   <label for="localizador">Localizador</label>
 </div>
@@ -15,7 +15,7 @@
   <label for="modo_desconto">Modo de desconto</label>
 </div>
 <div class="input-field col s6 l6 m6">
-  <input type="text" name="desconto" id="desconto" value="{{ isset($registro->desconto) ? $registro->desconto : null }}" required="required"> 
+  <input type="text" name="desconto" id="desconto" value="{{ isset($registro->desconto) ? $registro->desconto : null }}" required="required">
   <label for="desconto">Desconto</label>
 </div>
 <div class="input-field col s6 l6 m6">
@@ -30,8 +30,8 @@
   <input type="text" name="limite" id="limite" value="{{ isset($registro->limite) ? $registro->limite : null }}" required="required">
   <label for="limite">Limite desconto</label>
 </div>
-<div class="input-field col s12 l12 m12">
-  <input type="date" class="datepicker" name="dthr_validade" id="dthr_validade" value="{{ isset($registro->dthr_validade) ? $registro->dthr_validade : null }}" required="required">
+<div class="input-field col s6 l6 m6">
+  <input type="text" class="datepicker" name="dthr_validade" id="dthr_validade" value="{{ isset($registro->dthr_validade) ? $registro->dthr_validade : null }}" required="required">
   <label for="dthr_validade">Data vencimento</label>
 </div>
 <div class="input-field col s12 l12 m12">

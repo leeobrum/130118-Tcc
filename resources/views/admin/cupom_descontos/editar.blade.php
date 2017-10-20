@@ -20,8 +20,9 @@
 			<input type="hidden" name="_method" value="put">
 
 			@include('admin.cupom_descontos._form')
-
-			<button class="btn blue">Editar</button>
+			
+			<button class="btn blue">Editar</button>			
+			
 		</form>
 	</div>
 </div>
