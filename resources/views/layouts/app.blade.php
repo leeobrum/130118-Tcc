@@ -37,11 +37,7 @@
 <footer class="page-footer green" >
   <div class="container">
     <div class="row">
-      <div class="col l6 s12">
-        <h5 class="white-text">SisAdmin</h5>
-        <p>Sistema de Administração</p>
-        
-      </div>
+      <div class="col l6 s12"></div>
       <div class="col l4 offset-l2 s12">
         <h5 class="white-text">Links</h5>
         <ul>
