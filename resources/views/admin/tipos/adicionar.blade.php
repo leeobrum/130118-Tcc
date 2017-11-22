@@ -15,13 +15,6 @@
 	  	</nav>
 	</div>
 	<div class="row">
-		@if($errors->any())
-            <ul class="alert alert-danger">
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        @endif
 		<form action="{{route('admin.tipos.salvar')}}" method="post">
 			{{csrf_field()}}
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests\TipoRequest;
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Tipo;
 use App\Produto;
@@ -20,7 +20,7 @@ class TipoController extends Controller
         return view('admin.tipos.adicionar');
     }
 
-    public function salvar(TipoRequest $request){
+    public function salvar(Request $request){
         $dados = $request->all();
 
         $registro = new Tipo();
@@ -39,7 +39,7 @@ class TipoController extends Controller
         return view('admin.tipos.editar', compact('registro'));
     }
 
-    public function atualizar(TipoRequest $request, $id){
+    public function atualizar(Request $request, $id){
         $registro = Tipo::find($id);
         $dados = $request->all();
         $registro->titulo = $dados['titulo'];

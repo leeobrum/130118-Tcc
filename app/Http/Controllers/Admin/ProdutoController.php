@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests\ProdutoRequest;
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Produto;
 use App\Tipo;
@@ -30,7 +30,7 @@ class ProdutoController extends Controller
         return view('admin.produtos.editar', compact('registro', 'tipos'));
     }
 
-    public function salvar(ProdutoRequest $request){
+    public function salvar(Request $request){
         $dados = $request->all();
 
         $registro = new Produto();
@@ -60,7 +60,7 @@ class ProdutoController extends Controller
          return redirect()->route('admin.produtos');      
     }  
 
-    public function atualizar(ProdutoRequest $request, $id){
+    public function atualizar(Request $request, $id){
         $registro = Produto::find($id);
         $dados = $request->all();
 

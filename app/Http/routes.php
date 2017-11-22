@@ -39,11 +39,6 @@ Route::group(['middleware'=>'auth'], function(){
 	Route::post('/admin/usuarios/salvar',		['as'=>'admin.usuarios.salvar', 'uses'=>'Admin\UsuarioController@salvar']);
 	Route::put('/admin/usuarios/atualizar{id}',	['as'=>'admin.usuarios.atualizar', 'uses'=>'Admin\UsuarioController@atualizar']);
 
-//Papel Usuario
-	Route::get('/admin/usuarios/papel/{id}',['as'=>'admin.usuarios.papel', 'uses'=>'Admin\UsuarioController@papel']);
-	Route::post('/admin/usuarios/papel/salvar/{id}',['as'=>'admin.usuarios.papel.salvar', 'uses'=>'Admin\UsuarioController@salvarPapel']);
-	Route::get('/admin/usuarios/papel/remover/{id}/{papel_id}',['as'=>'admin.usuarios.papel.remover', 'uses'=>'Admin\UsuarioController@removerPapel']);
-
 //Paginas
 	Route::get('/admin/paginas', 				['as'=>'admin.paginas', 'uses' =>'Admin\PaginaController@index']);
 	Route::get('/admin/paginas/editar/{id}', 	['as'=>'admin.paginas.editar', 'uses' =>'Admin\PaginaController@editar']);
@@ -83,30 +78,12 @@ Route::group(['middleware'=>'auth'], function(){
 
 //Carrinho
 	Route::get('/admin/carrinho',				['as'=>'admin.carrinho', 'uses'=>'Admin\CarrinhoController@index']);	
-	Route::post('/admin/carrinho/comprar/{id}',	['as'=>'admin.carrinho.comprar', 'uses'=>'Admin\CarrinhoController@comprar']);
+	Route::post('/admin/carrinho/comprar/{id}',		['as'=>'admin.carrinho.comprar', 'uses'=>'Admin\CarrinhoController@comprar']);
 	Route::delete('/admin/carrinho/remover', 'admin\CarrinhoController@remover')->name('admin.carrinho.remover');
 	Route::post('/admin/carrinho/concluir',		['as'=>'admin.carrinho.concluir', 'uses'=>'Admin\CarrinhoController@concluir']);
 	Route::get('/admin/carrinho/compras',		['as'=>'admin.carrinho.compras', 'uses'=>'Admin\CarrinhoController@compras']);
 	Route::post('/admin/carrinho/cancelar',		['as'=>'admin.carrinho.cancelar', 'uses'=>'Admin\CarrinhoController@cancelar']);
 	Route::post('/admin/carrinho/desconto',		['as'=>'admin.carrinho.desconto', 'uses'=>'Admin\CarrinhoController@desconto']);
 	
-//Papeis
-	Route::get('/admin/papel',				['as'=>'admin.papel', 'uses'=>'Admin\PapelController@index']);
-	Route::get('/admin/papel/Adicionar',	['as'=>'admin.papel.adicionar', 'uses'=>'Admin\PapelController@adicionar']);
-	Route::post('/admin/papel/salvar',		['as'=>'admin.papel.salvar', 'uses'=>'Admin\PapelController@salvar']);
-	Route::get('/admin/papel/editar/{id}',	['as'=>'admin.papel.editar', 'uses'=>'Admin\PapelController@editar']);
-	Route::put('/admin/papel/atualizar{id}',['as'=>'admin.papel.atualizar', 'uses'=>'Admin\PapelController@atualizar']);
-	Route::get('/admin/papel/deletar/{id}',	['as'=>'admin.papel.deletar', 'uses'=>'Admin\PapelController@deletar']);
-	
-//Listagem de Permissoes	
-	Route::get('/admin/papel/permissao/{id}',['as'=>'admin.papel.permissao', 'uses'=>'Admin\PapelController@permissao']);
-	Route::post('/admin/papel/permissao/{id}/salvar', ['as'=>'admin.papel.permissao.salvar', 'uses'=>'Admin\PapelController@salvarPermissao']);
-	Route::get('/admin/papel/permissao/{id}/remover/{id_permissao}', ['as'=>'admin.papel.permissao.remover', 'uses'=>'Admin\PapelController@removerPermissao']);
-
-//
-	Route::get('/admin/papel/permissao/{id}',['as'=>'admin.papel.permissao', 'uses'=>'Admin\PapelController@permissao']);
-	Route::post('/admin/papel/permissao/salvar/{id}',['as'=>'admin.papel.permissao.salvar', 'uses'=>'Admin\PapelController@salvarPermissao']);
-	Route::get('/admin/papel/permissao/remover/{id}/{id_permissao}',['as'=>'admin.papel.permissao.remover', 'uses'=>'Admin\PapelController@removerPermissao']);
-
 }); 
 
