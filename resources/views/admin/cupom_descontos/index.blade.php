@@ -34,8 +34,12 @@
 					<td>{{date( 'd/m/Y' , strtotime($registro->dthr_validade))}}</td>				
 					<td>{{ $registro->ativo }}</td>					
 					<td>
+					@can('cupom_desconto_editar')
 						<a class="btn orange" href="{{route('admin.cupom_descontos.editar', $registro->id)}}">Editar</a>
+					@endcan
+					@can('cupom_desconto_deletar')
 						<a class="btn red" href="javascript: if(confirm('Deletar esse registro?')){ window.location.href = '{{ route('admin.cupom_descontos.deletar', $registro->id) }}}' }">Deletar</a>
+					@endcan
 					</td>
 				</tr>
 			@endforeach
@@ -43,7 +47,9 @@
 		</table>
 	</div>
 	<div class="row">
+		@can('cupom_desconto_adicionar')
 			<a class="btn blue" href="{{route('admin.cupom_descontos.adicionar')}}">Adicionar</a>
+		@endcan
 	</div>
 </div>
 @endsection

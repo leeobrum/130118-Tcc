@@ -15,6 +15,13 @@
 	  	</nav>
 	</div>
 	<div class="row">
+		@if($errors->any())
+            <ul class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        @endif
 		<form action="{{route('admin.usuarios.atualizar', $usuario->id)}}" method="post">
 			{{csrf_field()}}
 			<input type="hidden" name="_method" value="put">

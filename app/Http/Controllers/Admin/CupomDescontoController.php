@@ -11,17 +11,25 @@ use App\CupomDesconto;
 class CupomDescontoController extends Controller
 {
     public function index(){
-        $registros = CupomDesconto::all();
-        return view('admin.cupom_descontos.index', compact('registros'));
+        if(auth()->user()->can('cupom_desconto_listar')){
+            $registros = CupomDesconto::all();
+            return view('admin.cupom_descontos.index', compact('registros'));
+        }else{
+            return redirect()->route('admin.principal');
+        }         
     }
 
-    public function adicionar()
-    {
+    public function adicionar(){   
+        if(!auth()->user()->can('cupom_desconto_adicionar')){            
+            return redirect()->route('admin.principal');
+        }
         return view('admin.cupom_descontos.adicionar');
     }
 
-    public function editar($id)
-    {
+    public function editar($id){
+        if(!auth()->user()->can('cupom_desconto_editar')){            
+            return redirect()->route('admin.principal');
+        }
         $registro = CupomDesconto::find($id);   
         if( empty($registro->id) ) {
             return redirect()->route('admin.cupom_descontos');
@@ -31,6 +39,9 @@ class CupomDescontoController extends Controller
 
 
     public function salvar(Request $request){
+        if(!auth()->user()->can('cupom_desconto_adicionar')){            
+            return redirect()->route('admin.principal');
+        }
         $dados = $request->all();
 
         $registro = new CupomDesconto();
@@ -52,8 +63,10 @@ class CupomDescontoController extends Controller
          return redirect()->route('admin.cupom_descontos');
     }
 
-    public function atualizar(Request $request, $id)
-    {
+    public function atualizar(Request $request, $id){
+        if(!auth()->user()->can('cupom_desconto_editar')){            
+            return redirect()->route('admin.principal');
+        }
         $registro = CupomDesconto::find($id);
         $dados = $request->all();
 
@@ -73,9 +86,10 @@ class CupomDescontoController extends Controller
         return redirect()->route('admin.cupom_descontos');
     }
 
-    public function deletar($id)
-    {
-
+    public function deletar($id){
+        if(!auth()->user()->can('cupom_desconto_deletar')){            
+            return redirect()->route('admin.principal');
+        }
         CupomDesconto::find($id)->delete();
 
         \Session::flash('mensagem',['msg'=>'Registro criado com sucesso!','class'=>'green white-text']);

@@ -22,7 +22,7 @@
 			<div class="input-field">
 				<select name="permissao_id">
 					@foreach($permissao as $valor)
-					<option value="{{$valor->id}}">{{$valor->nome}}</option>
+					<option value="{{$valor->id}}">{{$valor->descricao}}</option>
 					@endforeach
 				</select>
 			</div>

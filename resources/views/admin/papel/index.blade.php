@@ -33,15 +33,19 @@
 						
 						<td>
 							@if($registro->nome != 'admin')
+							@can('papel_editar')
 							<a class="btn orange" href="{{ route('admin.papel.editar',$registro->id) }}">Editar</a>
 							<a class="btn blue" href="{{ route('admin.papel.permissao',$registro->id) }}">Permissão</a>
+							@endcan
 							@else
 							<a class="btn orange disabled" >Editar</a>
 							<a class="btn blue disabled" >Permissão</a>
 							@endif
 
 							@if($registro->nome != 'admin')
+							@can('papel_deletar')
 							<a class="btn red" href="javascript: if(confirm('Deletar esse registro?')){ window.location.href = '{{ route('admin.papel.deletar',$registro->id) }}' }">Deletar</a>
+							@endcan
 							@else
 							<a class="btn red disabled" >Deletar</a>
 							@endif							
@@ -53,7 +57,9 @@
 			
 		</div>
 		<div class="row">
+			@can('papel_adicionar')
 			<a class="btn blue" href="{{route('admin.papel.adicionar')}}">Adicionar</a>
+			@endcan
 		</div>
 	</div>
 

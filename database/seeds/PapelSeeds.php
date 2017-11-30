@@ -18,12 +18,12 @@ class PapelSeeds extends Seeder
         			'descricao'=>'Administrador do sistema'
         		]);
         }
-        if(!Papel::where('nome','=','gerente')->count()){
+        /*if(!Papel::where('nome','=','gerente')->count()){
         	$admin = Papel::create([
         			'nome'=>'gerente',
         			'descricao'=>'Gerente do sistema'
         		]);
-        }
+        }*/
 
         if(!Papel::where('nome','=','vendedor')->count()){
         	$admin = Papel::create([

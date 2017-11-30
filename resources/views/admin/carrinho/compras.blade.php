@@ -7,7 +7,7 @@
 	<nav>
 	    <div class="nav-wrapper teal lighten-1">
 	      <div class="col s12">
-	        <a href="{{route('site.home')}}" class="breadcrumb">Home</a>
+	        <a href="{{route('admin.principal')}}" class="breadcrumb">Home</a>
 	        <a class="breadcrumb">Minhas Compras</a>	        
 	      </div>
 	    </div>
@@ -51,6 +51,10 @@
                                         </p>
                                     @else
                                         <strong class="red-text">CANCELADO</strong>
+                                        @php
+                                            $total_produto = $pedido_produto->valor - $pedido_produto->desconto;
+                                            $total_pedido -= $total_produto;
+                                        @endphp
                                     @endif
                                 </td>
                                 <td>

@@ -24,8 +24,8 @@
         @endif
 		<form action="{{ route('admin.papel.salvar') }}" method="post">
 
-		{{csrf_field()}}
-		@include('admin.papel._form')
+			{{csrf_field()}}
+			@include('admin.papel._form')
 
 		<button class="btn blue">Salvar</button>
 
